@@ -5,12 +5,18 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export async function middleware(req) {
   const token = req.cookies.get("token")?.value; // Récupérer la valeur du cookie
+  const url = req.nextUrl.pathname;
 
   // console.log("Token:", token); // Log token pour vérifier s'il est bien récupéré
 
   if (!token) {
-    console.log("Pas de token trouvé, redirection vers login");
-    return NextResponse.redirect(new URL("/login", req.url)); // Si non authentifié, rediriger vers login
+    if (url === "/login" || url === "/register") {
+      console.log("Pas de token trouvé mais déjà sur /login ou /register");
+      return NextResponse.next(); // Permettre l'accès à /login et /register sans token
+    }
+
+    console.log("Pas de token trouvé, redirection vers /login");
+    return NextResponse.redirect(new URL("/login", req.url)); // Rediriger vers /login
   }
 
   try {
@@ -22,7 +28,15 @@ export async function middleware(req) {
 
     // console.log("Payload:", payload); // Log du payload pour vérifier la décryption
 
-    const url = req.url;
+    if (payload.role === "client" && (url.includes("/login") || url.includes("/register"))) {
+      console.log("Client connecté, redirection vers /dashboard");
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+    }
+
+    if (payload.role === "admin" && (url.includes("/login") || url.includes("/register"))) {
+      console.log("Admin connecté, redirection vers /admin");
+      return NextResponse.redirect(new URL("/admin", req.url));
+    }
 
     if (url.includes("/admin") && payload.role !== "admin") {
       console.log("Accès interdit, utilisateur n'est pas admin");
@@ -43,5 +57,5 @@ export async function middleware(req) {
 
 // Routes sécurisées
 export const config = {
-  matcher: ["/dashboard", "/admin/:path*"], // Routes protégées
+  matcher: ["/dashboard", "/admin/:path*", "/login", "/register"], // Routes protégées
 };
