@@ -1,10 +1,14 @@
+import HeroContent from "@/components/HeroContent/HeroContent";
+import Navbar from "@/components/Navbar/Navbar";
 import { getIllustrations } from "@/lib/illustration.action";
 
 export default async function Home() {
   const illustrationsData = await getIllustrations();
-  console.log(illustrationsData);
+  // console.log(illustrationsData);
   return (
     <div>
+      <Navbar />
+      <HeroContent title="Bougado Gaboudo" />
       <h1>Hello</h1>
       <div>
         {illustrationsData.map((illustration) => (
