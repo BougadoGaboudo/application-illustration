@@ -30,12 +30,12 @@ async function main() {
   //     data: [
   //       {
   //         email: "admin@admin.com",
-  //         password: "123",
+  //         password: "$2b$10$V3DLwIlNZE7/3NPKHUzKu.rJ7xbtzAsqSF48CO5EZryrw/LYD/EIG", // 123
   //         role: "admin",
   //       },
   //       {
   //         email: "client@client.com",
-  //         password: "123",
+  //         password: "$2b$10$V3DLwIlNZE7/3NPKHUzKu.rJ7xbtzAsqSF48CO5EZryrw/LYD/EIG", // 123
   //         role: "client",
   //       },
   //     ],

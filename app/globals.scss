@@ -1,0 +1,89 @@
+@font-face {
+  font-family: "Gochi Hand";
+  src: url("/fonts/GochiHand-Regular.ttf");
+}
+@font-face {
+  font-family: "Core Bandi Face";
+  src: url("/fonts/Core\ Bandi\ Face\ W01\ Regular.ttf");
+}
+
+$dark-blue: #0b2658;
+$light-blue: #7aa1e2;
+$yellow: #f7b827;
+$light-yellow: #f6e0ae;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: "Core Bandi Face";
+}
+
+h1 {
+  font-family: "Gochi Hand";
+}
+
+a {
+  font-family: "Gochi Hand";
+  color: $dark-blue;
+  font-size: 1.5rem;
+  transition: 0.2s ease-out;
+  &:hover {
+    color: $light-blue;
+  }
+}
+
+/* Gallery.module.scss */
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  button {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    background-color: #ddd;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #bbb;
+    }
+
+    &.active {
+      background-color: #555;
+      color: white;
+    }
+  }
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.grid-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  width: 300px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+}
