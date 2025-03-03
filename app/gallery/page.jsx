@@ -1,4 +1,4 @@
-import MasonryGrid from "@/components/MasonryGrid/MasonryGrid";
+import GalleryGrid from "@/components/GalleryGrid/GalleryGrid";
 import Navbar from "/components/Navbar/Navbar";
 import { getIllustrations } from "/lib/illustration.action";
 
@@ -19,7 +19,7 @@ export default async function GalleryPage() {
           </div>
         ))}
       </div> */}
-      <MasonryGrid data={illustrationsData} />
+      <GalleryGrid data={illustrationsData} />
     </>
   );
 }

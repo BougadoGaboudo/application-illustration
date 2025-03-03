@@ -1,0 +1,38 @@
+@use "/app/globals.scss" as *;
+
+.section-shop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .grid-item {
+    position: relative;
+    border-radius: 0.5rem;
+    border: 1px solid $dark-blue;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    img {
+      height: 15rem;
+      width: 100%;
+      object-position: 50% 20%;
+      object-fit: cover;
+    }
+    h3 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .price {
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      color: #fff;
+      background: $dark-blue;
+    }
+    button {
+      width: 100%;
+    }
+  }
+}

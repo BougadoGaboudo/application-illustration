@@ -21,6 +21,9 @@ export default function AdminPage() {
           <option value="study">Study</option>
         </select>
         <br />
+        <label htmlFor="price">Prix</label>
+        <input type="number" name="price" id="price" />
+        <br />
         <button type="submit">Ajouter</button>
       </form>
     </div>

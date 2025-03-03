@@ -8,8 +8,8 @@ export default async function Home() {
   return (
     <div>
       <Navbar />
-      <HeroContent title="Bougado Gaboudo" />
-      <h1>Hello</h1>
+      <HeroContent title="Bougado" />
+      {/* <h1>Hello</h1>
       <div>
         {illustrationsData.map((illustration) => (
           <div key={illustration.id}>
@@ -21,7 +21,7 @@ export default async function Home() {
             />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
