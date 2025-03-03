@@ -1,61 +1,77 @@
-import { jwtVerify } from "jose"; // Importer jwtVerify de jose
+import { jwtVerify } from "jose";
 import { NextResponse } from "next/server";
 
-const JWT_SECRET = process.env.JWT_SECRET;
+export async function middleware(request) {
+  const token = request.cookies.get("token")?.value;
+  const url = request.nextUrl.pathname;
 
-export async function middleware(req) {
-  const token = req.cookies.get("token")?.value; // Récupérer la valeur du cookie
-  const url = req.nextUrl.pathname;
-
-  // console.log("Token:", token); // Log token pour vérifier s'il est bien récupéré
-
-  if (!token) {
-    if (url === "/login" || url === "/register") {
-      console.log("Pas de token trouvé mais déjà sur /login ou /register");
-      return NextResponse.next(); // Permettre l'accès à /login et /register sans token
+  // Routes publiques
+  if (url === "/login" || url === "/register") {
+    if (!token) {
+      return NextResponse.next();
     }
+    
+    try {
+      const { payload } = await jwtVerify(
+        token,
+        new TextEncoder().encode(process.env.JWT_SECRET)
+      );
+      
+      // Redirection des utilisateurs déjà connectés
+      if (payload.role === "admin") {
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
+      return NextResponse.redirect(new URL("/cart", request.url));
+    } catch {
+      return NextResponse.next();
+    }
+  }
 
-    console.log("Pas de token trouvé, redirection vers /login");
-    return NextResponse.redirect(new URL("/login", req.url)); // Rediriger vers /login
+  // Vérification du token pour les routes protégées
+  if (!token) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   try {
-    // Utiliser jwtVerify de jose pour vérifier le token
     const { payload } = await jwtVerify(
       token,
-      new TextEncoder().encode(JWT_SECRET)
+      new TextEncoder().encode(process.env.JWT_SECRET)
     );
 
-    // console.log("Payload:", payload); // Log du payload pour vérifier la décryption
-
-    if (payload.role === "client" && (url.includes("/login") || url.includes("/register"))) {
-      console.log("Client connecté, redirection vers /dashboard");
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+    // Protection des routes admin
+    if (url.startsWith("/admin")) {
+      if (payload.role !== "admin") {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
     }
 
-    if (payload.role === "admin" && (url.includes("/login") || url.includes("/register"))) {
-      console.log("Admin connecté, redirection vers /admin");
-      return NextResponse.redirect(new URL("/admin", req.url));
+    // Protection des routes client
+    if (url.startsWith("/cart")) {
+      if (payload.role !== "client") {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
     }
 
-    if (url.includes("/admin") && payload.role !== "admin") {
-      console.log("Accès interdit, utilisateur n'est pas admin");
-      return NextResponse.redirect(new URL("/unauthorized", req.url)); // Rediriger vers une page d'erreur si non admin
+    // Protection des routes du panier (clients uniquement)
+    if (url.startsWith("/cart")) {
+      if (payload.role !== "client") {
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
+      }
     }
 
-    if (url.includes("/dashboard") && payload.role !== "client") {
-      console.log("Accès interdit, utilisateur n'est pas client");
-      return NextResponse.redirect(new URL("/unauthorized", req.url)); // Rediriger vers une page d'erreur si non client
-    }
-
-    return NextResponse.next(); // Si tout va bien, permettre la requête
+    return NextResponse.next();
   } catch (error) {
-    console.log("Erreur dans la vérification du token", error);
-    return NextResponse.redirect(new URL("/login", req.url)); // Si token invalide, rediriger vers login
+    console.error("Erreur de vérification du token:", error);
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 }
 
-// Routes sécurisées
 export const config = {
-  matcher: ["/dashboard", "/admin/:path*", "/login", "/register"], // Routes protégées
+  matcher: [
+    "/cart/:path*",
+    "/admin/:path*",
+    "/cart/:path*",
+    "/login",
+    "/register"
+  ]
 };
