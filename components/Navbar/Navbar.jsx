@@ -33,6 +33,9 @@ const Navbar = () => {
           <Link href="/contact">Contact</Link>
         </li>
       </ul>
+      <Link href="/cart">
+        <Image src="/img/cart.png" width={40} height={40} alt="Cart" />
+      </Link>
     </nav>
   );
 };

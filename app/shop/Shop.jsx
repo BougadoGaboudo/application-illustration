@@ -201,14 +201,11 @@ const Shop = ({ data }) => {
     if (!formatId || !sizeId) return "Prix indisponible";
 
     const price = prices[`${illustrationId}-${formatId}-${sizeId}`];
-    return price !== null && price !== undefined
-      ? `${price}€`
-      : "Prix indisponible";
+    return price !== null && price !== undefined ? `${price}€` : "20 €";
   };
 
   return (
     <section className="section-shop">
-      <h1>Shop</h1>
       <div className="filter-buttons-container">
         {["*", "original", "fanart"].map((category) => (
           <button

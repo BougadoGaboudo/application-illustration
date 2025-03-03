@@ -69,6 +69,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/lib/user.action";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [error, setError] = useState("");
@@ -116,6 +117,7 @@ const LoginForm = () => {
           required
         />
         <button type="submit">Connexion</button>
+        <Link href="/register">Pas de compte ? Inscrivez-vous !</Link>
       </form>
     </section>
   );

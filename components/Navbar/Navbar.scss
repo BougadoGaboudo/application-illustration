@@ -1,8 +1,12 @@
+@use "/app/globals.scss" as *;
+
 nav {
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  max-width: $width;
   ul {
     display: flex;
     a {
