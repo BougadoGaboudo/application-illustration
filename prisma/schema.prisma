@@ -11,15 +11,77 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
+  cart      Cart?
   role      Role     @default(client)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Format {
+  id        Int               @id @default(autoincrement())
+  name      String            @unique // "scroll", "print"
+  pricings  FormatSizePrice[]
+  cartItems CartItem[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model Size {
+  id        Int               @id @default(autoincrement())
+  name      String            @unique // "A4", "A3", etc.
+  pricings  FormatSizePrice[]
+  cartItems CartItem[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model FormatSizePrice {
+  id        Int      @id @default(autoincrement())
+  formatId  Int
+  sizeId    Int
+  price     Float
+  format    Format   @relation(fields: [formatId], references: [id])
+  size      Size     @relation(fields: [sizeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([formatId, sizeId])
 }
 
 model Illustration {
-  id    Int              @id @default(autoincrement())
-  title String
-  url   String
-  type  IllustrationType
+  id        Int              @id @default(autoincrement())
+  title     String
+  url       String
+  type      IllustrationType
+  cartItems CartItem[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id             Int          @id @default(autoincrement())
+  cartId         Int
+  illustrationId Int
+  formatId       Int
+  sizeId         Int
+  quantity       Int
+  cart           Cart         @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  illustration   Illustration @relation(fields: [illustrationId], references: [id], onDelete: Cascade)
+  format         Format       @relation(fields: [formatId], references: [id])
+  size           Size         @relation(fields: [sizeId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([cartId, illustrationId, formatId, sizeId])
 }
 
 enum Role {
