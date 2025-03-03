@@ -1,3 +1,6 @@
 @use "../app/globals.scss" as *;
 @use "../components/Navbar/Navbar.scss";
 @use "../components/HeroContent/HeroContent.scss";
+@use "../components/GalleryGrid/GalleryGrid.scss";
+@use "/app/login/LoginForm.scss";
+@use "/app/shop/Shop.scss";
