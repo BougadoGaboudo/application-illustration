@@ -1,79 +1,8 @@
-// "use client";
-
-// import { useState, useRef, useEffect } from "react";
-// import Isotope from "isotope-layout";
-// import { addToCart } from "@/lib/cart.action";
-
-// const Shop = ({ data }) => {
-//   const gridRef = useRef(null);
-//   const [iso, setIso] = useState(null);
-//   const [filter, setFilter] = useState("*");
-
-//   useEffect(() => {
-//     if (gridRef.current) {
-//       const isoInstance = new Isotope(gridRef.current, {
-//         itemSelector: ".grid-item",
-//         masonry: {
-//           fitWidth: true,
-//           gutter: 16,
-//         },
-//       });
-//       setIso(isoInstance);
-//     }
-//     return () => iso?.destroy();
-//   }, []);
-
-//   useEffect(() => {
-//     if (iso) {
-//       const filterValue = filter === "*" ? "*" : `.${filter}`;
-//       iso.arrange({ filter: filterValue });
-//     }
-//   }, [filter, iso]);
-
-//   return (
-//     <section className="section-shop">
-//       <h1>Shop</h1>
-//       <div className="filter-buttons-container">
-//         {["*", "original", "fanart", "study"].map((category) => (
-//           <button
-//             key={category}
-//             onClick={() => setFilter(category)}
-//             className={filter === category ? "active" : ""}
-//           >
-//             {category === "*" ? "Tous" : category}
-//           </button>
-//         ))}
-//       </div>
-//       <div ref={gridRef} className="grid">
-//         {data.map((illustration) => (
-//           <form action={addToCart} key={illustration.id}>
-//             <div className={`grid-item ${illustration.type}`}>
-//               <img src={illustration.url} alt={illustration.title} />
-//               <h3>{illustration.title}</h3>
-//               <span className="price">{illustration.price}€</span>
-//               <input type="hidden" name="id" value={illustration.id} />
-//               <input type="number" name="quantity" min="1" defaultValue={1} />
-//               <button type="submit">Ajouter au panier</button>
-//             </div>
-//           </form>
-//         ))}
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Shop;
-
 "use client";
 
 import { useState, useRef, useEffect } from "react";
 import Isotope from "isotope-layout";
-import {
-  addToCart,
-  getFormats,
-  getSizes,
-  getPriceForFormatAndSize,
-} from "@/lib/cart.action";
+import { addToCart, getFormats, getTypes, getPrice } from "@/lib/cart.action";
 
 const Shop = ({ data }) => {
   const gridRef = useRef(null);
@@ -90,7 +19,7 @@ const Shop = ({ data }) => {
     async function loadOptions() {
       try {
         const formatsData = await getFormats();
-        const sizesData = await getSizes();
+        const sizesData = await getTypes();
 
         setFormats(formatsData);
         setSizes(sizesData);
@@ -153,7 +82,7 @@ const Shop = ({ data }) => {
   // Fonction pour charger le prix
   async function loadPrice(illustrationId, formatId, sizeId, priceObj = null) {
     try {
-      const price = await getPriceForFormatAndSize(formatId, sizeId);
+      const price = await getPrice(formatId, sizeId);
 
       if (priceObj) {
         priceObj[`${illustrationId}-${formatId}-${sizeId}`] = price;
@@ -195,13 +124,15 @@ const Shop = ({ data }) => {
   };
 
   // Récupérer le prix pour une illustration
-  const getPrice = (illustrationId) => {
+  const getNewPrice = (illustrationId) => {
     const formatId = selectedFormats[illustrationId];
     const sizeId = selectedSizes[illustrationId];
     if (!formatId || !sizeId) return "Prix indisponible";
 
     const price = prices[`${illustrationId}-${formatId}-${sizeId}`];
-    return price !== null && price !== undefined ? `${price}€` : "20 €";
+    return price !== null && price !== undefined
+      ? `${price}€`
+      : "Prix indisponible";
   };
 
   return (
@@ -247,9 +178,9 @@ const Shop = ({ data }) => {
                 </select>
               </div>
 
-              {/* Sélection de la taille */}
+              {/* Sélection du type (renommé de taille) */}
               <div className="product-options">
-                <label htmlFor={`size-${illustration.id}`}>Taille:</label>
+                <label htmlFor={`size-${illustration.id}`}>Type:</label>
                 <select
                   id={`size-${illustration.id}`}
                   name="sizeId"
@@ -260,7 +191,7 @@ const Shop = ({ data }) => {
                   required
                 >
                   <option value="" disabled>
-                    Choisir une taille
+                    Choisir un type
                   </option>
                   {sizes.map((size) => (
                     <option key={size.id} value={size.id}>
@@ -270,7 +201,7 @@ const Shop = ({ data }) => {
                 </select>
               </div>
 
-              <span className="price">{getPrice(illustration.id)}</span>
+              <span className="price">{getNewPrice(illustration.id)}</span>
               <input type="hidden" name="id" value={illustration.id} />
               <input type="number" name="quantity" min="1" defaultValue={1} />
               <button type="submit">Ajouter au panier</button>

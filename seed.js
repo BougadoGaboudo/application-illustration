@@ -1,43 +1,18 @@
-const { prisma } = require("./lib/prisma");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 async function main() {
 
-  // Création des formats
-  const formats = await prisma.format.createMany({
+  // Définition des prix par format et type
+  await prisma.price.createMany({
     data: [
-      { name: "scroll" },
-      { name: "print" },
-    ],
-    skipDuplicates: true,
-  });
-
-  // Création des tailles
-  const sizes = await prisma.size.createMany({
-    data: [
-      { name: "A4" },
-      { name: "A3" },
-      { name: "A2" },
-    ],
-    skipDuplicates: true,
-  });
-
-  // Récupération des IDs créés
-  const formatScroll = await prisma.format.findUnique({ where: { name: "scroll" } });
-  const formatPrint = await prisma.format.findUnique({ where: { name: "print" } });
-  
-  const sizeA4 = await prisma.size.findUnique({ where: { name: "A4" } });
-  const sizeA3 = await prisma.size.findUnique({ where: { name: "A3" } });
-  const sizeA2 = await prisma.size.findUnique({ where: { name: "A2" } });
-
-  // Définition des prix par format et taille
-  await prisma.formatSizePrice.createMany({
-    data: [
-      { formatId: formatScroll.id, sizeId: sizeA4.id, price: 20.0 },
-      { formatId: formatScroll.id, sizeId: sizeA3.id, price: 25.0 },
-      { formatId: formatScroll.id, sizeId: sizeA2.id, price: 35.0 },
-      { formatId: formatPrint.id, sizeId: sizeA4.id, price: 15.0 },
-      { formatId: formatPrint.id, sizeId: sizeA3.id, price: 20.0 },
-      { formatId: formatPrint.id, sizeId: sizeA2.id, price: 30.0 },
+      { format: "A4", type: "print", amount: 15.0 },
+      { format: "A5", type: "print", amount: 12.5 },
+      { format: "A3", type: "print", amount: 20.0 },
+      { format: "A2", type: "print", amount: 25.0 },
+      { format: "A4", type: "scroll", amount: 20.0 },
+      { format: "A3", type: "scroll", amount: 25.0 },
+      { format: "A2", type: "scroll", amount: 30.0 },
     ],
     skipDuplicates: true,
   });
@@ -49,29 +24,21 @@ async function main() {
         title: "OC Dragon",
         url: "/img/dragon.jpg",
         type: "original",
-        formatId: null, // Sera défini lors de l'achat
-        sizeId: null,   // Sera défini lors de l'achat
       },
       {
         title: "Happy New Year 2025",
         url: "/img/hny2025.jpg",
         type: "original",
-        formatId: null,
-        sizeId: null,
       },
       {
         title: "Merry Christmas 2024",
         url: "/img/noel2024.jpg",
         type: "original",
-        formatId: null,
-        sizeId: null,
       },
       {
         title: "Yelan from Genshin Impact",
         url: "/img/yelan.jpg",
         type: "fanart",
-        formatId: null,
-        sizeId: null,
       },
     ],
   });

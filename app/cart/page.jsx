@@ -15,10 +15,14 @@ export default async function CartPage() {
     <>
       <Navbar />
       <LogoutButton />
-      {cart.items?.length ? (
-        <Cart data={cart} />
+      {cart ? (
+        cart.items?.length ? (
+          <Cart data={cart} />
+        ) : (
+          <div>Votre panier est vide</div>
+        )
       ) : (
-        <div>Votre panier est vide</div>
+        <div>Panier non disponible</div>
       )}
     </>
   );

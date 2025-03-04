@@ -17,47 +17,6 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Format {
-  id        Int               @id @default(autoincrement())
-  name      String            @unique // "scroll", "print"
-  pricings  FormatSizePrice[]
-  cartItems CartItem[]
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-}
-
-model Size {
-  id        Int               @id @default(autoincrement())
-  name      String            @unique // "A4", "A3", etc.
-  pricings  FormatSizePrice[]
-  cartItems CartItem[]
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-}
-
-model FormatSizePrice {
-  id        Int      @id @default(autoincrement())
-  formatId  Int
-  sizeId    Int
-  price     Float
-  format    Format   @relation(fields: [formatId], references: [id])
-  size      Size     @relation(fields: [sizeId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([formatId, sizeId])
-}
-
-model Illustration {
-  id        Int              @id @default(autoincrement())
-  title     String
-  url       String
-  type      IllustrationType
-  cartItems CartItem[]
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-}
-
 model Cart {
   id        Int        @id @default(autoincrement())
   userId    Int        @unique
@@ -71,17 +30,33 @@ model CartItem {
   id             Int          @id @default(autoincrement())
   cartId         Int
   illustrationId Int
-  formatId       Int
-  sizeId         Int
+  format         Format
+  type           Type
   quantity       Int
+  priceId        Int
   cart           Cart         @relation(fields: [cartId], references: [id], onDelete: Cascade)
   illustration   Illustration @relation(fields: [illustrationId], references: [id], onDelete: Cascade)
-  format         Format       @relation(fields: [formatId], references: [id])
-  size           Size         @relation(fields: [sizeId], references: [id])
+  price          Price        @relation(fields: [priceId], references: [id])
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+}
 
-  @@unique([cartId, illustrationId, formatId, sizeId])
+model Illustration {
+  id        Int              @id @default(autoincrement())
+  title     String
+  url       String
+  type      IllustrationType
+  cartItems CartItem[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model Price {
+  id       Int        @id @default(autoincrement())
+  format   Format
+  type     Type
+  amount   Float
+  CartItem CartItem[]
 }
 
 enum Role {
@@ -93,4 +68,16 @@ enum IllustrationType {
   original
   fanart
   study
+}
+
+enum Format {
+  A5
+  A4
+  A3
+  A2
+}
+
+enum Type {
+  print
+  scroll
 }

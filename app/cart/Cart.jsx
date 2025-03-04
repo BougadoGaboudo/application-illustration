@@ -95,8 +95,8 @@ export default function Cart({ data }) {
                   />
                 </td>
                 <td>{item.illustration.title}</td>
-                <td>{item.format.name}</td>
-                <td>{item.size.name}</td>
+                <td>{item.format}</td>
+                <td>{item.type}</td>
                 <td className="price">{item.price}€</td>
                 <td className="quantity">
                   <form action={updateCartItem}>
