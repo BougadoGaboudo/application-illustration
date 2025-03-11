@@ -60,6 +60,22 @@ input {
   outline: none;
 }
 
+section {
+  max-width: $width;
+  margin: 0 auto;
+  min-height: 60vh;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: $dark-blue;
+  p {
+    margin: 0 auto;
+    font-size: 1.2rem;
+    width: 50rem;
+  }
+}
+
 .filter-buttons-container {
   display: flex;
   gap: 1rem;

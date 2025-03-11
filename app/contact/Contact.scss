@@ -1,0 +1,14 @@
+@use "/app/globals.scss" as *;
+
+.section-contact {
+  h1 {
+    margin: 0 auto;
+    width: fit-content;
+    font-size: 2.5rem;
+  }
+  h3 {
+    font-size: 2rem;
+    margin: 0 auto;
+    width: fit-content;
+  }
+}
