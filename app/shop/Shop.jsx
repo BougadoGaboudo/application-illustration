@@ -20,6 +20,7 @@ const Shop = ({ data }) => {
       try {
         const formatsData = await getFormats();
         const sizesData = await getTypes();
+        const pricesData = await getPrice();
 
         setFormats(formatsData);
         setSizes(sizesData);
@@ -29,23 +30,26 @@ const Shop = ({ data }) => {
         const defaultSizes = {};
         const initialPrices = {};
 
-        data.forEach((illustration) => {
+        const pricePromises = data.map(async (illustration) => {
           if (formatsData.length > 0 && sizesData.length > 0) {
-            defaultFormats[illustration.id] = formatsData[0].id;
-            defaultSizes[illustration.id] = sizesData[0].id;
+            const defaultFormatId = formatsData[0].id;
+            const defaultSizeId = sizesData[0].id;
 
-            // Charger le prix initial
-            loadPrice(
-              illustration.id,
-              formatsData[0].id,
-              sizesData[0].id,
-              initialPrices
-            );
+            defaultFormats[illustration.id] = defaultFormatId;
+            defaultSizes[illustration.id] = defaultSizeId;
+
+            const price = await getPrice(defaultFormatId, defaultSizeId);
+            initialPrices[
+              `${illustration.id}-${defaultFormatId}-${defaultSizeId}`
+            ] = price;
           }
         });
 
+        await Promise.all(pricePromises);
+
         setSelectedFormats(defaultFormats);
         setSelectedSizes(defaultSizes);
+        setPrices(initialPrices);
       } catch (error) {
         console.error(
           "Erreur lors du chargement des formats et tailles",
@@ -130,9 +134,7 @@ const Shop = ({ data }) => {
     if (!formatId || !sizeId) return "Prix indisponible";
 
     const price = prices[`${illustrationId}-${formatId}-${sizeId}`];
-    return price !== null && price !== undefined
-      ? `${price}€`
-      : "Prix indisponible";
+    return price !== null && price !== undefined ? `${price}€` : "...";
   };
 
   return (
