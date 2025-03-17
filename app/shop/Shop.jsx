@@ -20,7 +20,6 @@ const Shop = ({ data }) => {
       try {
         const formatsData = await getFormats();
         const sizesData = await getTypes();
-        const pricesData = await getPrice();
 
         setFormats(formatsData);
         setSizes(sizesData);
