@@ -4,7 +4,6 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <hr />
       <section>
         <p>
           I studied illustration and specialize in character art and character

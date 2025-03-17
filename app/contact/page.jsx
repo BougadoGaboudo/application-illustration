@@ -4,7 +4,6 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <hr />
       <section className="section-contact">
         <h1>Contact</h1>
         <h3>bougadogaboudo@gmail.com</h3>
