@@ -2,6 +2,45 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
+  // Création des prix de commission
+  await prisma.commissionPrice.createMany({
+    data: [
+      // Sans background
+      {
+        type: "fullbody",
+        background: false,
+        amount: 750
+      },
+      {
+        type: "halfbody",
+        background: false,
+        amount: 500
+      },
+      {
+        type: "portrait", 
+        background: false,
+        amount: 250
+      },
+      
+      // Avec background (+250)
+      {
+        type: "fullbody",
+        background: true,
+        amount: 1000  // 750 + 250
+      },
+      {
+        type: "halfbody",
+        background: true,
+        amount: 750   // 500 + 250
+      },
+      {
+        type: "portrait",
+        background: true,
+        amount: 500   // 250 + 250
+      }
+    ],
+    skipDuplicates: true,
+  });
 
   // Définition des prix par format et type
   await prisma.price.createMany({

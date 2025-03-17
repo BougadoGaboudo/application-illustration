@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  cart      Cart?
-  role      Role     @default(client)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  password    String
+  cart        Cart?
+  commissions Commission[]
+  role        Role         @default(client)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Cart {
@@ -59,6 +60,31 @@ model Price {
   CartItem CartItem[]
 }
 
+model Commission {
+  id                Int              @id @default(autoincrement())
+  userId            Int
+  commissionPriceId Int
+  title             String
+  description       String           @db.Text
+  type              CommissionType
+  background        Boolean          @default(false)
+  status            CommissionStatus @default(pending)
+  rejectionReason   String?          @db.Text
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commissionPrice   CommissionPrice  @relation(fields: [commissionPriceId], references: [id], onDelete: Cascade)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model CommissionPrice {
+  id          Int            @id @default(autoincrement())
+  amount      Int
+  type        CommissionType
+  background  Boolean
+  bonus       Int?
+  commissions Commission[]
+}
+
 enum Role {
   client
   admin
@@ -80,4 +106,17 @@ enum Format {
 enum Type {
   print
   scroll
+}
+
+enum CommissionType {
+  fullbody
+  halfbody
+  portrait
+}
+
+enum CommissionStatus {
+  pending
+  in_progress
+  completed
+  rejected
 }
