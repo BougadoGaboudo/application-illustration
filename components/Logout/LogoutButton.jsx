@@ -1,20 +1,12 @@
 "use client";
 
 import { logout } from "@/lib/user.action";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function LogoutButton() {
   const router = useRouter();
 
-  // async function handleLogout() {
-  //   const res = await fetch("/api/auth/logout", {
-  //     method: "POST",
-  //   });
-
-  //   if (res.ok) {
-  //     router.push("/login"); // Rediriger après déconnexion
-  //   }
-  // }
   async function handleLogout() {
     const res = await logout();
 
@@ -24,5 +16,9 @@ export default function LogoutButton() {
     }
   }
 
-  return <button onClick={handleLogout}>Déconnexion</button>;
+  return (
+    <button onClick={handleLogout} className="logout">
+      <Image src="/img/logout.svg" alt="Logout" width={32} height={32} />
+    </button>
+  );
 }

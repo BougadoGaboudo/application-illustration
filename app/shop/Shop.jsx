@@ -156,55 +156,63 @@ const Shop = ({ data }) => {
               <img src={illustration.url} alt={illustration.title} />
               <h3>{illustration.title}</h3>
 
-              {/* Sélection du format */}
-              <div className="product-options">
-                <label htmlFor={`format-${illustration.id}`}>Format:</label>
-                <select
-                  id={`format-${illustration.id}`}
-                  name="formatId"
-                  value={selectedFormats[illustration.id] || ""}
-                  onChange={(e) =>
-                    handleFormatChange(illustration.id, e.target.value)
-                  }
-                  required
-                >
-                  <option value="" disabled>
-                    Choisir un format
-                  </option>
-                  {formats.map((format) => (
-                    <option key={format.id} value={format.id}>
-                      {format.name}
+              <div className="options-container">
+                {/* Sélection du format */}
+                <div className="option">
+                  <label htmlFor={`format-${illustration.id}`}>Format:</label>
+                  <select
+                    id={`format-${illustration.id}`}
+                    name="formatId"
+                    value={selectedFormats[illustration.id] || ""}
+                    onChange={(e) =>
+                      handleFormatChange(illustration.id, e.target.value)
+                    }
+                    required
+                  >
+                    <option value="" disabled>
+                      Choisir un format
                     </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Sélection du type (renommé de taille) */}
-              <div className="product-options">
-                <label htmlFor={`size-${illustration.id}`}>Type:</label>
-                <select
-                  id={`size-${illustration.id}`}
-                  name="sizeId"
-                  value={selectedSizes[illustration.id] || ""}
-                  onChange={(e) =>
-                    handleSizeChange(illustration.id, e.target.value)
-                  }
-                  required
-                >
-                  <option value="" disabled>
-                    Choisir un type
-                  </option>
-                  {sizes.map((size) => (
-                    <option key={size.id} value={size.id}>
-                      {size.name}
+                    {formats.map((format) => (
+                      <option key={format.id} value={format.id}>
+                        {format.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/* Sélection du type (renommé de taille) */}
+                <div className="option">
+                  <label htmlFor={`size-${illustration.id}`}>Type:</label>
+                  <select
+                    id={`size-${illustration.id}`}
+                    name="sizeId"
+                    value={selectedSizes[illustration.id] || ""}
+                    onChange={(e) =>
+                      handleSizeChange(illustration.id, e.target.value)
+                    }
+                    required
+                  >
+                    <option value="" disabled>
+                      Choisir un type
                     </option>
-                  ))}
-                </select>
+                    {sizes.map((size) => (
+                      <option key={size.id} value={size.id}>
+                        {size.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <span className="price">{getNewPrice(illustration.id)}</span>
               <input type="hidden" name="id" value={illustration.id} />
-              <input type="number" name="quantity" min="1" defaultValue={1} />
+              <label htmlFor="quantity">Quantité:</label>
+              <input
+                type="number"
+                name="quantity"
+                min="1"
+                defaultValue={1}
+                className="quantity"
+              />
               <button type="submit">Ajouter au panier</button>
             </div>
           </form>

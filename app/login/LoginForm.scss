@@ -7,6 +7,9 @@
   align-items: center;
   flex-direction: column;
   color: $dark-blue;
+  .error {
+    text-align: center;
+  }
 
   h1 {
     margin-bottom: 1rem;

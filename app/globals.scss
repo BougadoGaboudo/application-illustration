@@ -102,3 +102,78 @@ section {
     }
   }
 }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  thead {
+    background-color: $light-yellow;
+  }
+
+  th,
+  td {
+    padding: 0.8rem;
+    text-align: left;
+  }
+
+  tbody {
+    tr {
+      border-bottom: 2px solid $dark-blue;
+
+      &:last-child {
+        border-bottom: none; // Supprime la ligne sur la dernière ligne du tableau
+        td:first-child {
+          border-bottom-left-radius: 0.5rem;
+        }
+        td:last-child {
+          border-bottom-right-radius: 0.5rem;
+        }
+      }
+      &:nth-child(even) {
+        background-color: #7aa0e241;
+      }
+    }
+  }
+
+  th {
+    font-weight: bold;
+    border-bottom: 2px solid $dark-blue;
+    &:first-child {
+      border-top-left-radius: 0.5rem;
+    }
+    &:last-child {
+      border-top-right-radius: 0.5rem;
+    }
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  a {
+    font-family: "Core Bandi Face";
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    background-color: $dark-blue;
+    transition: 0.2s ease-out;
+    &:hover {
+      background-color: $light-blue;
+      color: white;
+    }
+  }
+
+  button {
+    background-color: rgba(255, 25, 0, 0.745);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: 0.2s ease-out;
+
+    &:hover {
+      background-color: rgb(174, 4, 4);
+    }
+  }
+}

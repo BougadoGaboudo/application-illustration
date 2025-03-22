@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import { checkAuth, isAdmin } from "@/lib/auth";
+import LogoutButton from "../Logout/LogoutButton";
 
-const Navbar = () => {
+export async function Navbar() {
+  const user = await checkAuth();
+  const admin = await isAdmin();
   return (
     <>
       <header>
@@ -31,21 +35,27 @@ const Navbar = () => {
             <li>
               <Link href="/shop">Shop</Link>
             </li>
-            {/* <li>
-          <Link href="/event">Event</Link>
-          </li> */}
             <li>
               <Link href="/contact">Contact</Link>
             </li>
           </ul>
-          <Link href="/cart">
-            <Image src="/img/cart.png" width={40} height={40} alt="Cart" />
-          </Link>
+          <div className="cart-log">
+            {admin ? (
+              <Link href="/admin">
+                <Image src="/img/cart.png" width={40} height={40} alt="Cart" />
+              </Link>
+            ) : (
+              <Link href="/dashboard">
+                <Image src="/img/cart.png" width={40} height={40} alt="Cart" />
+              </Link>
+            )}
+            {user && <LogoutButton />}
+          </div>
         </nav>
         <hr />
       </header>
     </>
   );
-};
+}
 
 export default Navbar;

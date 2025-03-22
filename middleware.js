@@ -21,7 +21,7 @@ export async function middleware(request) {
       if (payload.role === "admin") {
         return NextResponse.redirect(new URL("/admin", request.url));
       }
-      return NextResponse.redirect(new URL("/cart", request.url));
+      return NextResponse.redirect(new URL("/dashboard", request.url));
     } catch {
       return NextResponse.next();
     }
@@ -46,16 +46,9 @@ export async function middleware(request) {
     }
 
     // Protection des routes client
-    if (url.startsWith("/cart")) {
+    if (url.startsWith("/dashboard")) {
       if (payload.role !== "client") {
-        return NextResponse.redirect(new URL("/unauthorized", request.url));
-      }
-    }
-
-    // Protection des routes du panier (clients uniquement)
-    if (url.startsWith("/cart")) {
-      if (payload.role !== "client") {
-        return NextResponse.redirect(new URL("/unauthorized", request.url));
+        return NextResponse.redirect(new URL("/admin", request.url));
       }
     }
 
@@ -68,9 +61,8 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    "/cart/:path*",
+    "/dashboard/:path*",
     "/admin/:path*",
-    "/cart/:path*",
     "/login",
     "/register"
   ]

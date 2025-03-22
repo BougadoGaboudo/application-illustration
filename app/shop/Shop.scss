@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 3rem;
 
   .grid-item {
     position: relative;
@@ -21,17 +22,27 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-align: center;
+    }
+    .options-container {
+      display: flex;
+      margin: 0.5rem 0;
     }
     .price {
       padding: 0.5rem;
       border-radius: 0.5rem;
+      font-size: 1.2rem;
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
       color: #fff;
       background: $dark-blue;
     }
+    .quantity {
+      width: 100%;
+    }
     button {
+      margin-top: 1rem;
       width: 100%;
     }
   }

@@ -13,4 +13,17 @@ nav {
       padding: 1rem;
     }
   }
+  .cart-log {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .logout {
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }
