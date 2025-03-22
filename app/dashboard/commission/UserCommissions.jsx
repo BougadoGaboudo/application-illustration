@@ -1,9 +1,9 @@
-// src/app/dashboard/UserCommissions.jsx
 "use client";
 
 import { useState } from "react";
 import { deleteCommission } from "@/lib/commission.action";
 import { translateStatus } from "@/lib/utils";
+import Link from "next/link";
 
 export default function UserCommissions({ data }) {
   const [userCommissions, setUserCommissions] = useState(
@@ -12,7 +12,6 @@ export default function UserCommissions({ data }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Supprimer une commission
   const handleDelete = async (id) => {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cette commission ?")) {
       return;
@@ -81,10 +80,18 @@ export default function UserCommissions({ data }) {
               </div>
               <div>
                 {commission.status === "pending" && (
-                  <button onClick={() => handleDelete(commission.id)}>
-                    Annuler cette commission
-                  </button>
+                  <>
+                    <button onClick={() => handleDelete(commission.id)}>
+                      Annuler cette commission
+                    </button>
+                    <Link href={`/dashboard/commission/${commission.id}`}>
+                      <button>Modifier cette commission</button>
+                    </Link>
+                  </>
                 )}
+                <Link href={`/dashboard/commission/${commission.id}/files`}>
+                  <button>Voir les fichiers</button>
+                </Link>
               </div>
             </div>
           ))}
