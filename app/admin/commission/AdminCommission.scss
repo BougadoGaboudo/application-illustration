@@ -1,0 +1,65 @@
+@use "/app/globals.scss" as *;
+
+.commission-admin-id {
+  padding: 3rem 0;
+  align-items: center;
+  .container-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 50vw;
+    margin-bottom: 2rem;
+    h1 {
+      text-align: center;
+    }
+    .retour {
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      color: white;
+      background-color: $dark-blue;
+      transition: 0.2s ease-out;
+      &:hover {
+        background-color: $light-blue;
+      }
+    }
+  }
+
+  .container-content {
+    width: 100%;
+    max-width: 50vw;
+
+    .info {
+      margin-top: 1rem;
+      &:first-child {
+        margin-top: 0;
+      }
+      h2 {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+
+.form-status {
+  .container-status {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    &:first-child {
+      margin-bottom: 0.5rem;
+    }
+    .status {
+      width: 10rem;
+    }
+    textarea {
+      padding: 0.5rem;
+      min-height: 10rem;
+      margin-bottom: 1rem;
+    }
+  }
+}

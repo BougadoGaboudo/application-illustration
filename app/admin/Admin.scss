@@ -1,0 +1,22 @@
+@use "/app/globals.scss" as *;
+
+.admin-section {
+  flex-direction: row;
+  align-items: center;
+  .admin-container {
+    display: flex;
+    gap: 2rem;
+    a {
+      border: 0.1rem solid $dark-blue;
+      border-radius: 0.5rem;
+      padding: 2rem;
+    }
+  }
+}
+
+.section-commission-list {
+  padding: 3rem 0;
+  h1 {
+    text-align: center;
+  }
+}
