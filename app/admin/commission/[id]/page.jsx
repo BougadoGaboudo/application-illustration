@@ -1,23 +1,23 @@
-// src/app/admin/commissions/[id]/page.jsx
 import { isAdmin } from "@/lib/auth";
-import { getCommissionById } from "@/lib/commission.action";
+import { getCommissionById, getCommissionFiles } from "@/lib/commission.action";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
 import CommissionStatusForm from "./CommissionStatusForm";
+import SketchUploadForm from "./SketchUploadForm";
+import FinalIllustrationUploadForm from "./FinalIllustrationUploadForm";
 import { translateStatus } from "@/lib/utils";
 
 export default async function CommissionDetailPage({ params }) {
-  const { id } = await params;
+  const { id } = params;
 
-  // Vérifier si l'utilisateur est admin
   const adminCheck = await isAdmin();
   if (!adminCheck) {
     redirect("/dashboard");
   }
 
-  // Récupérer les détails de la commission
   const result = await getCommissionById(id);
+  const filesResult = await getCommissionFiles(id);
 
   // Si la commission n'existe pas, afficher une page 404
   if (!result.success || !result.commission) {
@@ -25,6 +25,13 @@ export default async function CommissionDetailPage({ params }) {
   }
 
   const commission = result.commission;
+  const files = filesResult.success ? filesResult.files : [];
+
+  // Séparer les fichiers par type
+  const sketches = files.filter((file) => file.type === "sketch");
+  const finalIllustrations = files.filter(
+    (file) => file.type === "finalIllustration"
+  );
 
   return (
     <>
@@ -104,6 +111,68 @@ export default async function CommissionDetailPage({ params }) {
               <CommissionStatusForm
                 id={commission.id}
                 currentStatus={commission.status}
+              />
+            </div>
+
+            <div className="info">
+              <h2>Croquis</h2>
+              {sketches.length > 0 && (
+                <div>
+                  <h3>Croquis déjà envoyés :</h3>
+                  <ul>
+                    {sketches.map((sketch) => (
+                      <li key={sketch.id}>
+                        <a
+                          href={sketch.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {sketch.fileName || `Croquis #${sketch.id}`}
+                        </a>
+                        <span>
+                          {" "}
+                          - Ajouté le{" "}
+                          {new Date(sketch.createdAt).toLocaleDateString()}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <SketchUploadForm id={commission.id} status={commission.status} />
+            </div>
+
+            <div className="info">
+              <h2>Illustrations finales</h2>
+              {finalIllustrations.length > 0 && (
+                <div>
+                  <h3>Illustrations finales déjà envoyées :</h3>
+                  <ul>
+                    {finalIllustrations.map((illustration) => (
+                      <li key={illustration.id}>
+                        <a
+                          href={illustration.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {illustration.fileName ||
+                            `Illustration #${illustration.id}`}
+                        </a>
+                        <span>
+                          {" "}
+                          - Ajouté le{" "}
+                          {new Date(
+                            illustration.createdAt
+                          ).toLocaleDateString()}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <FinalIllustrationUploadForm
+                id={commission.id}
+                status={commission.status}
               />
             </div>
           </div>
