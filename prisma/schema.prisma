@@ -70,10 +70,24 @@ model Commission {
   background        Boolean          @default(false)
   status            CommissionStatus @default(pending)
   rejectionReason   String?          @db.Text
+  files             CommissionFile[]
   user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   commissionPrice   CommissionPrice  @relation(fields: [commissionPriceId], references: [id], onDelete: Cascade)
   createdAt         DateTime         @default(now())
   updatedAt         DateTime         @updatedAt
+}
+
+model CommissionFile {
+  id           Int                @id @default(autoincrement())
+  commissionId Int
+  url          String
+  fileName     String?
+  fileType     String?
+  fileSize     Int?
+  type         CommissionFileType
+  commission   Commission         @relation(fields: [commissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
 }
 
 model CommissionPrice {
@@ -119,4 +133,9 @@ enum CommissionStatus {
   in_progress
   completed
   rejected
+}
+
+enum CommissionFileType {
+  sketch
+  finalIllustration
 }
