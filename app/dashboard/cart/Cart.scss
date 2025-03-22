@@ -1,0 +1,17 @@
+.section-cart {
+  padding: 5rem;
+  h1 {
+    text-align: center;
+  }
+  .quantity-input {
+    width: 4rem;
+    margin-right: 1rem;
+  }
+  .update-btn {
+    background-color: rgb(255, 115, 0);
+    transition: 0.2s ease-out;
+    &:hover {
+      background-color: rgb(199, 92, 4);
+    }
+  }
+}

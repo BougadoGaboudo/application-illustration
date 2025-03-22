@@ -1,0 +1,15 @@
+@use "/app/globals.scss" as *;
+
+.dashboard-section {
+  flex-direction: row;
+  align-items: center;
+  .dashboard-container {
+    display: flex;
+    gap: 2rem;
+    a {
+      border: 0.1rem solid $dark-blue;
+      border-radius: 0.5rem;
+      padding: 2rem;
+    }
+  }
+}
