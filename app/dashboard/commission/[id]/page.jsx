@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import EditCommission from "./EditCommission";
 
 export default async function EditCommissionPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
 
   const user = await checkAuth();
   if (!user) {

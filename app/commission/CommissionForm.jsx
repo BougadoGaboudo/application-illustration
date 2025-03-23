@@ -4,7 +4,6 @@
 import { useState } from "react";
 import { createCommission } from "@/lib/commission.action";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function CommissionForm({ prices }) {
   const router = useRouter();
@@ -13,12 +12,13 @@ export default function CommissionForm({ prices }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Calculer le prix sélectionné en fonction du type et du background
+  // Calculer le prix en fonction du type et du background
   const getCurrentPrice = () => {
-    const price = prices.find(
-      (p) => p.type === selectedType && p.background === hasBackground
-    );
-    return price ? price.amount : 0;
+    const price = prices.find((p) => p.type === selectedType);
+    if (!price) return 0;
+
+    // Calul prix total avec ou sans background
+    return hasBackground ? price.baseAmount + price.bgAddon : price.baseAmount;
   };
 
   // Gérer la soumission du formulaire de création
@@ -71,7 +71,8 @@ export default function CommissionForm({ prices }) {
                 defaultChecked
                 onChange={() => setSelectedType("fullbody")}
               />{" "}
-              Full-body
+              Full-body ({prices.find((p) => p.type === "fullbody")?.baseAmount}
+              €)
             </label>
             <label>
               <input
@@ -80,7 +81,8 @@ export default function CommissionForm({ prices }) {
                 value="halfbody"
                 onChange={() => setSelectedType("halfbody")}
               />{" "}
-              Half-body
+              Half-body ({prices.find((p) => p.type === "halfbody")?.baseAmount}
+              €)
             </label>
             <label>
               <input
@@ -89,7 +91,8 @@ export default function CommissionForm({ prices }) {
                 value="portrait"
                 onChange={() => setSelectedType("portrait")}
               />{" "}
-              Portrait
+              Portrait ({prices.find((p) => p.type === "portrait")?.baseAmount}
+              €)
             </label>
           </div>
         </div>
@@ -102,7 +105,8 @@ export default function CommissionForm({ prices }) {
               value="true"
               onChange={() => setHasBackground(!hasBackground)}
             />{" "}
-            Background
+            Background (+
+            {prices.find((p) => p.type === selectedType)?.bgAddon || 0}€)
           </label>
         </div>
         <div className="label-input">

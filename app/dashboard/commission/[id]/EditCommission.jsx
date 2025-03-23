@@ -39,6 +39,18 @@ export default function EditCommission({ commission }) {
     );
   }
 
+  // Calculer le prix estimé avec la nouvelle structure
+  const getEstimatedPrice = () => {
+    if (prices.length === 0) return "Chargement...";
+
+    const priceInfo = prices.find((p) => p.type === type);
+    if (!priceInfo) return "Non disponible";
+
+    return background
+      ? priceInfo.baseAmount + priceInfo.bgAddon
+      : priceInfo.baseAmount;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -118,7 +130,7 @@ export default function EditCommission({ commission }) {
                 checked={background}
                 onChange={() => setBackground(true)}
               />
-              Oui
+              Oui (+{prices.find((p) => p.type === type)?.bgAddon || 0}€)
             </label>
             <label>
               <input
@@ -136,13 +148,7 @@ export default function EditCommission({ commission }) {
         {prices.length > 0 && (
           <div>
             <h3>Prix estimé:</h3>
-            <p>
-              {prices.find(
-                (price) =>
-                  price.type === type && price.background === background
-              )?.amount || "Chargement..."}
-              €
-            </p>
+            <p>{getEstimatedPrice()}€</p>
           </div>
         )}
 

@@ -9,7 +9,7 @@ import FinalIllustrationUploadForm from "./FinalIllustrationUploadForm";
 import { translateStatus } from "@/lib/utils";
 
 export default async function CommissionDetailPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
 
   const adminCheck = await isAdmin();
   if (!adminCheck) {
@@ -73,17 +73,11 @@ export default async function CommissionDetailPage({ params }) {
                     </p>
                   )}
                 <p>
-                  <span>Prix:</span> {commission.commissionPrice.amount}€
-                </p>
-                {commission.commissionPrice.bonus && (
-                  <p>
-                    <span>Bonus:</span> {commission.commissionPrice.bonus}€
-                  </p>
-                )}
-                <p>
-                  <span>Prix total:</span>{" "}
-                  {commission.commissionPrice.amount +
-                    (commission.commissionPrice.bonus || 0)}
+                  <span>Prix:</span>{" "}
+                  {commission.background
+                    ? commission.commissionPrice.baseAmount +
+                      commission.commissionPrice.bgAddon
+                    : commission.commissionPrice.baseAmount}
                   €
                 </p>
               </div>

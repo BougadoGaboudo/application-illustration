@@ -5,39 +5,9 @@ async function main() {
   // Création des prix de commission
   await prisma.commissionPrice.createMany({
     data: [
-      // Sans background
-      {
-        type: "fullbody",
-        background: false,
-        amount: 750
-      },
-      {
-        type: "halfbody",
-        background: false,
-        amount: 500
-      },
-      {
-        type: "portrait", 
-        background: false,
-        amount: 250
-      },
-      
-      // Avec background (+250)
-      {
-        type: "fullbody",
-        background: true,
-        amount: 1000  // 750 + 250
-      },
-      {
-        type: "halfbody",
-        background: true,
-        amount: 750   // 500 + 250
-      },
-      {
-        type: "portrait",
-        background: true,
-        amount: 500   // 250 + 250
-      }
+      { type: "fullbody", baseAmount: 750, bgAddon: 250 },
+      { type: "halfbody", baseAmount: 500, bgAddon: 250 },
+      { type: "portrait", baseAmount: 250, bgAddon: 250 },
     ],
     skipDuplicates: true,
   });
@@ -80,24 +50,27 @@ async function main() {
         type: "fanart",
       },
     ],
+    skipDuplicates: true,
   });
 
   // Création des utilisateurs
-    await prisma.user.createMany({
-      data: [
-        {
-          email: "admin@admin.com",
-          password: "$2b$10$V3DLwIlNZE7/3NPKHUzKu.rJ7xbtzAsqSF48CO5EZryrw/LYD/EIG", // 123
-          role: "admin",
-        },
-        {
-          email: "client@client.com",
-          password: "$2b$10$V3DLwIlNZE7/3NPKHUzKu.rJ7xbtzAsqSF48CO5EZryrw/LYD/EIG", // 123
-          role: "client",
-        },
-      ],
-      skipDuplicates: true,
-    });
+  await prisma.user.createMany({
+    data: [
+      {
+        email: "admin@admin.com",
+        password:
+          "$2b$10$V3DLwIlNZE7/3NPKHUzKu.rJ7xbtzAsqSF48CO5EZryrw/LYD/EIG", // 123
+        role: "admin",
+      },
+      {
+        email: "client@client.com",
+        password:
+          "$2b$10$V3DLwIlNZE7/3NPKHUzKu.rJ7xbtzAsqSF48CO5EZryrw/LYD/EIG", // 123
+        role: "client",
+      },
+    ],
+    skipDuplicates: true,
+  });
 }
 
 main()

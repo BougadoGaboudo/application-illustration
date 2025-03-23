@@ -69,7 +69,12 @@ export default function UserCommissions({ data }) {
                   {commission.background ? "Oui" : "Non"}
                 </p>
                 <p>
-                  <span>Prix:</span> {commission.commissionPrice.amount}€
+                  <span>Prix:</span>{" "}
+                  {commission.background
+                    ? commission.commissionPrice.baseAmount +
+                      commission.commissionPrice.bgAddon
+                    : commission.commissionPrice.baseAmount}
+                  €
                 </p>
               </div>
               <div>

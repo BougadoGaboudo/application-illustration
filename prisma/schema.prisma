@@ -92,10 +92,9 @@ model CommissionFile {
 
 model CommissionPrice {
   id          Int            @id @default(autoincrement())
-  amount      Int
-  type        CommissionType
-  background  Boolean
-  bonus       Int?
+  type        CommissionType @unique
+  baseAmount  Int
+  bgAddon     Int // Prix pour le background
   commissions Commission[]
 }
 

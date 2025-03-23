@@ -6,7 +6,7 @@ import Link from "next/link";
 import { translateStatus } from "@/lib/utils";
 
 export default async function CommissionFilesPage({ params }) {
-  const { id } = params;
+  const { id } = await params;
 
   const user = await checkAuth();
   if (!user) {
@@ -54,17 +54,20 @@ export default async function CommissionFilesPage({ params }) {
             <div>
               {sketches.map((sketch) => (
                 <div key={sketch.id}>
-                  <h3>{sketch.fileName || "Croquis"}</h3>
+                  <h3>{sketch.fileName}</h3>
                   <p>
                     Ajouté le: {new Date(sketch.createdAt).toLocaleDateString()}
                   </p>
                   <div>
+                    <img src={sketch.url} alt={sketch.fileName} />
                     <a
                       href={sketch.url}
+                      download={sketch.fileName}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <button>Voir le croquis</button>
+                      <button>Télécharger le croquis</button>{" "}
+                      {/* Modifié le texte du bouton */}
                     </a>
                   </div>
                 </div>
@@ -81,18 +84,21 @@ export default async function CommissionFilesPage({ params }) {
             <div>
               {finalIllustrations.map((illustration) => (
                 <div key={illustration.id}>
-                  <h3>{illustration.fileName || "Illustration finale"}</h3>
+                  <h3>{illustration.fileName}</h3>
                   <p>
                     Ajouté le:{" "}
                     {new Date(illustration.createdAt).toLocaleDateString()}
                   </p>
                   <div>
+                    <img src={illustration.url} alt={illustration.fileName} />
                     <a
                       href={illustration.url}
+                      download={illustration.fileName}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <button>Voir l'illustration finale</button>
+                      <button>Télécharger l'illustration finale</button>{" "}
+                      {/* Modifié le texte du bouton */}
                     </a>
                   </div>
                 </div>

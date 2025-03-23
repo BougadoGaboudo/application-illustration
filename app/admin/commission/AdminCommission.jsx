@@ -72,7 +72,13 @@ export default function AdminCommission({ data }) {
                   </td>
                   <td>{commission.background ? "Oui" : "Non"}</td>
                   <td>{commission.user.email}</td>
-                  <td>{commission.commissionPrice.amount}€</td>
+                  <td>
+                    {commission.background
+                      ? commission.commissionPrice.baseAmount +
+                        commission.commissionPrice.bgAddon
+                      : commission.commissionPrice.baseAmount}
+                    €
+                  </td>
                   <td>
                     <Link href={`/admin/commission/${commission.id}`}>
                       Détails
