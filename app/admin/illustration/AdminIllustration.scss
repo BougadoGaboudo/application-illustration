@@ -1,0 +1,13 @@
+.section-admin-illus {
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    button {
+      margin-top: 0.5rem;
+    }
+  }
+}

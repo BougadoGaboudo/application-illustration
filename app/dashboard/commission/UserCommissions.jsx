@@ -43,12 +43,12 @@ export default function UserCommissions({ data }) {
   }
 
   return (
-    <section>
+    <section className="section-user-commission">
       <h2>Mes Commissions</h2>
       {userCommissions.length > 0 ? (
-        <div>
+        <div className="container-user-commission">
           {userCommissions.map((commission) => (
-            <div key={commission.id}>
+            <div className="card-user-commission" key={commission.id}>
               <h3>{commission.title}</h3>
               <div>
                 <p>
@@ -83,26 +83,36 @@ export default function UserCommissions({ data }) {
                   <p>{commission.description}</p>
                 </details>
               </div>
-              <div>
+              <div className="container-actions">
                 {commission.status === "pending" && (
                   <>
-                    <button onClick={() => handleDelete(commission.id)}>
+                    <Link href={`/dashboard/commission/${commission.id}/files`}>
+                      <button>Voir les fichiers</button>
+                    </Link>
+                    <Link href={`/dashboard/commission/${commission.id}`}>
+                      <button className="update-btn">
+                        Modifier cette commission
+                      </button>
+                    </Link>
+                    <button
+                      className="remove-btn"
+                      onClick={() => handleDelete(commission.id)}
+                    >
                       Annuler cette commission
                     </button>
-                    <Link href={`/dashboard/commission/${commission.id}`}>
-                      <button>Modifier cette commission</button>
-                    </Link>
                   </>
                 )}
-                <Link href={`/dashboard/commission/${commission.id}/files`}>
-                  <button>Voir les fichiers</button>
-                </Link>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>Vous n'avez pas encore de commissions. Créez-en une nouvelle !</p>
+        <div className="no-commission">
+          <p>Vous n'avez pas encore de commissions.</p>
+          <Link href="/commission">
+            <button>Faîtes une commission !</button>
+          </Link>
+        </div>
       )}
     </section>
   );

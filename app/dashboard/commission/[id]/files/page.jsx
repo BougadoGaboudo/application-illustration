@@ -43,7 +43,7 @@ export default async function CommissionFilesPage({ params }) {
         <div>
           <h1>Fichiers pour la commission "{commission.title}"</h1>
           <p>Statut: {translateStatus(commission.status)}</p>
-          <Link href="/dashboard">
+          <Link href="/dashboard/commission">
             <button>Retour au tableau de bord</button>
           </Link>
         </div>

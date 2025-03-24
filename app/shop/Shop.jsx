@@ -130,7 +130,7 @@ const Shop = ({ data }) => {
   const getNewPrice = (illustrationId) => {
     const formatId = selectedFormats[illustrationId];
     const sizeId = selectedSizes[illustrationId];
-    if (!formatId || !sizeId) return "Prix indisponible";
+    if (!formatId || !sizeId) return "...";
 
     const price = prices[`${illustrationId}-${formatId}-${sizeId}`];
     return price !== null && price !== undefined ? `${price}€` : "...";

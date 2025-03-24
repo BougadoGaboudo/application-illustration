@@ -38,18 +38,27 @@ a {
 
 button {
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid $dark-blue;
   color: #fff;
   background-color: $dark-blue;
   cursor: pointer;
+  transition: 0.2s ease-out;
   &:hover,
   &:focus {
     color: #fff;
     background-color: $light-blue;
     outline: none;
-    transition: 0.2s ease-out;
+  }
+}
+
+.update-btn {
+  border: none;
+  background-color: rgb(255, 115, 0);
+  transition: 0.2s ease-out;
+  &:hover {
+    background-color: rgb(199, 92, 4);
   }
 }
 
@@ -104,7 +113,10 @@ section {
 }
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 2px solid $dark-blue;
+  border-radius: 0.5rem;
   thead {
     background-color: $light-yellow;
   }
@@ -175,5 +187,18 @@ table {
     &:hover {
       background-color: rgb(174, 4, 4);
     }
+  }
+}
+
+.remove-btn {
+  background-color: rgba(255, 25, 0, 0.745);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+
+  &:hover {
+    background-color: rgb(174, 4, 4);
   }
 }

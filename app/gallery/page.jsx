@@ -7,19 +7,9 @@ export default async function GalleryPage() {
   return (
     <>
       <Navbar />
-      {/* <div>
-        {illustrationsData.map((illustration) => (
-          <div key={illustration.id}>
-            <h2>{illustration.title}</h2>
-            <img
-              style={{ width: "400px" }}
-              src={illustration.url}
-              alt={illustration.title}
-            />
-          </div>
-        ))}
-      </div> */}
-      <GalleryGrid data={illustrationsData} />
+      <main>
+        <GalleryGrid data={illustrationsData} />
+      </main>
     </>
   );
 }

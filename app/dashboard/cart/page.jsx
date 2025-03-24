@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { checkAuth } from "@/lib/auth";
 import { getCart } from "@/lib/cart.action";
 import Cart from "./Cart";
+import Link from "next/link";
 
 export default async function CartPage() {
   const auth = await checkAuth();
@@ -12,15 +13,20 @@ export default async function CartPage() {
   return (
     <>
       <Navbar />
-      {cart ? (
-        cart.items?.length ? (
-          <Cart data={cart} />
+      <main>
+        {cart ? (
+          cart.items?.length ? (
+            <Cart data={cart} />
+          ) : (
+            <div className="empty">
+              <div>Votre panier est vide :(</div>
+              <Link href="/shop">Visiter le shop</Link>
+            </div>
+          )
         ) : (
-          <div>Votre panier est vide</div>
-        )
-      ) : (
-        <div>Panier non disponible</div>
-      )}
+          <div>Panier non disponible</div>
+        )}
+      </main>
     </>
   );
 }

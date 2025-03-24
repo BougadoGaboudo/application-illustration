@@ -1,5 +1,12 @@
 @use "/app/globals.scss" as *;
 
+.section-admin-commission {
+  min-height: 30vh;
+  p {
+    text-align: center;
+  }
+}
+
 .commission-admin-id {
   padding: 3rem 0;
   align-items: center;

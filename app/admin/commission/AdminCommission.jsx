@@ -45,7 +45,7 @@ export default function AdminCommission({ data }) {
   }
 
   return (
-    <section>
+    <section className="section-admin-commission">
       {commissions.length > 0 ? (
         <div>
           <table>
@@ -93,7 +93,7 @@ export default function AdminCommission({ data }) {
           </table>
         </div>
       ) : (
-        <p>Aucune commission trouvée.</p>
+        <p>Il n'y a pas encore de commissions :(</p>
       )}
     </section>
   );

@@ -4,7 +4,6 @@ import { getUserCommissions } from "@/lib/commission.action";
 import { checkAuth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import UserCommissions from "./UserCommissions";
-import Link from "next/link";
 
 export default async function DashboardPage() {
   // Vérifier si l'utilisateur est connecté
@@ -20,13 +19,6 @@ export default async function DashboardPage() {
     <>
       <Navbar />
       <main>
-        <div>
-          <h1>Mon Tableau de Bord</h1>
-          <Link href="/commission">
-            <button>Nouvelle commission</button>
-          </Link>
-        </div>
-
         <UserCommissions data={commissionsData} />
       </main>
     </>

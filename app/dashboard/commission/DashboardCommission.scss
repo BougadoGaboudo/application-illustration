@@ -1,0 +1,56 @@
+@use "/app/globals.scss" as *;
+
+.section-user-commission {
+  h2 {
+    text-align: center;
+  }
+  .container-user-commission {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    .card-user-commission {
+      border: 2px solid $dark-blue;
+      border-radius: 0.5rem;
+      padding: 2rem;
+
+      summary {
+        margin: 0.5rem 0;
+        border: 1px solid $dark-blue;
+        width: fit-content;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: 0.2s ease-out;
+        &:hover,
+        &:focus {
+          color: #fff;
+          background-color: $light-blue;
+          outline: none;
+        }
+      }
+
+      .container-actions {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+.no-commission {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  h2 {
+    width: fit-content;
+  }
+  p {
+    width: fit-content;
+  }
+}

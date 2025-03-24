@@ -75,7 +75,7 @@ export default function EditCommission({ commission }) {
   };
 
   return (
-    <div>
+    <section className="section-user-edit-commission">
       <h1>Modifier ma commission</h1>
       {error && <p>{error}</p>}
 
@@ -165,6 +165,6 @@ export default function EditCommission({ commission }) {
           </button>
         </div>
       </form>
-    </div>
+    </section>
   );
 }

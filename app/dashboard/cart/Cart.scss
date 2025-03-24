@@ -1,4 +1,10 @@
+@use "/app/globals.scss" as *;
+
 .section-cart {
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+  gap: 0;
   padding: 5rem;
   h1 {
     text-align: center;
@@ -12,6 +18,38 @@
     transition: 0.2s ease-out;
     &:hover {
       background-color: rgb(199, 92, 4);
+    }
+  }
+  .cart-total {
+    margin-top: 1rem;
+    text-align: right;
+    font-size: 1.5rem;
+  }
+}
+
+.empty {
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  color: $dark-blue;
+
+  a {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid $dark-blue;
+    color: #fff;
+    background-color: $dark-blue;
+    cursor: pointer;
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: $light-blue;
+      outline: none;
+      transition: 0.2s ease-out;
     }
   }
 }
