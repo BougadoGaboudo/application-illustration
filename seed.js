@@ -49,6 +49,82 @@ async function main() {
         url: "/img/yelan.jpg",
         type: "fanart",
       },
+      {
+        title: "Ganyu from Genshin Impact",
+        url: "/img/ganyu.jpg",
+        type: "fanart",
+      },
+      {
+        title: "Kamisato Ayaka from Genshin Impact",
+        url: "/img/ayaka.jpg",
+        type: "fanart",
+      },
+      {
+        title: "Study",
+        url: "/img/studyfemme1.jpg",
+        type: "study",
+      },
+      {
+        title: "Yae Miko from Genshin Impact",
+        url: "/img/yaefanart.jpg",
+        type: "fanart",
+      },
+      {
+        title: "Study Landscape",
+        url: "/img/studypaysage4.jpg",
+        type: "study",
+      },
+      {
+        title: "Happy New Year 2024",
+        url: "/img/hny2024.jpg",
+        type: "original",
+      },
+      {
+        title: "Merry Christmas 2023",
+        url: "/img/noel2023.jpg",
+        type: "original",
+      },
+      {
+        title: "Study",
+        url: "/img/studyfemme2.jpg",
+        type: "study",
+      },
+      {
+        title: "Study Bunny",
+        url: "/img/studylapin.jpg",
+        type: "study",
+      },
+      {
+        title: "Raiden Shogun from Genshin Impact",
+        url: "/img/raidenfanart.jpg",
+        type: "fanart",
+      },
+      {
+        title: "Study Shark",
+        url: "/img/studyrequin.jpg",
+        type: "study",
+      },
+      {
+        title: "Happy New Year 2022",
+        url: "/img/hny2022.jpg",
+        type: "original",
+      },
+
+      {
+        title: "Merry Christmas 2020",
+        url: "/img/noel2020.jpg",
+        type: "original",
+      },
+      {
+        title: "Study Piaf",
+        url: "/img/studypiaf.jpg",
+        type: "study",
+      },
+      {
+        title: "Study",
+        url: "/img/studyhomme2.jpg",
+        type: "study",
+      },
     ],
     skipDuplicates: true,
   });
