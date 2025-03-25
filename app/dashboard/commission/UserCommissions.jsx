@@ -84,11 +84,11 @@ export default function UserCommissions({ data }) {
                 </details>
               </div>
               <div className="container-actions">
+                <Link href={`/dashboard/commission/${commission.id}/files`}>
+                  <button>Voir les fichiers</button>
+                </Link>
                 {commission.status === "pending" && (
                   <>
-                    <Link href={`/dashboard/commission/${commission.id}/files`}>
-                      <button>Voir les fichiers</button>
-                    </Link>
                     <Link href={`/dashboard/commission/${commission.id}`}>
                       <button className="update-btn">
                         Modifier cette commission

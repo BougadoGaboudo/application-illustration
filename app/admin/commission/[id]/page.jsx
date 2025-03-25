@@ -1,5 +1,6 @@
 import { isAdmin } from "@/lib/auth";
 import { getCommissionById, getCommissionFiles } from "@/lib/commission.action";
+import { getAllTags } from "@/lib/tag.action";
 import { notFound, redirect } from "next/navigation";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
@@ -18,6 +19,7 @@ export default async function CommissionDetailPage({ params }) {
 
   const result = await getCommissionById(id);
   const filesResult = await getCommissionFiles(id);
+  const allTags = await getAllTags(); // Récupérer tous les tags disponibles
 
   // Si la commission n'existe pas, afficher une page 404
   if (!result.success || !result.commission) {
@@ -80,6 +82,20 @@ export default async function CommissionDetailPage({ params }) {
                     : commission.commissionPrice.baseAmount}
                   €
                 </p>
+
+                {/* Affichage des tags actuels */}
+                {commission.tags && commission.tags.length > 0 && (
+                  <div className="commission-tags">
+                    <span>Tags:</span>
+                    <div className="tag-list">
+                      {commission.tags.map((t) => (
+                        <span key={t.id} className="tag-badge">
+                          {t.tag.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="info">
@@ -101,10 +117,12 @@ export default async function CommissionDetailPage({ params }) {
             </div>
 
             <div className="info">
-              <h2>Gérer le statut</h2>
+              <h2>Gérer la commission</h2>
               <CommissionStatusForm
                 id={commission.id}
                 currentStatus={commission.status}
+                currentTags={commission.tags || []}
+                allTags={allTags}
               />
             </div>
 

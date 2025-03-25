@@ -70,3 +70,23 @@
     }
   }
 }
+
+.commission-tags {
+  margin-top: 10px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.tag-badge {
+  display: inline-block;
+  background-color: #4a9eff;
+  color: white;
+  font-size: 0.85rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+}

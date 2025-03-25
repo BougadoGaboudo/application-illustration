@@ -1,39 +1,11 @@
-// import Navbar from "@/components/Navbar/Navbar";
-// import { isAdmin } from "@/lib/auth";
-// import {
-//   getAllCommissions,
-//   getCommissionPrices,
-// } from "@/lib/commission.action";
-// import Commission from "./Commission";
-
-// export default async function CommissionPage() {
-//   // Vérifier si l'utilisateur est admin
-//   const userRole = await isAdmin();
-
-//   // Récupérer les données en fonction du rôle
-//   let commissionsData = { success: false, commissions: [] };
-
-//   if (userRole) {
-//     // Si admin, récupérer toutes les commissions
-//     commissionsData = await getAllCommissions();
-//   }
-
-//   return (
-//     <>
-//       <Navbar />
-//       <main>
-//         <Commission data={commissionsData} role={userRole} />
-//       </main>
-//     </>
-//   );
-// }
-
-// src/app/commission/page.jsx
 import { getCommissionPrices } from "@/lib/commission.action";
 import Navbar from "@/components/Navbar/Navbar";
 import CommissionForm from "./CommissionForm";
+import { getRecentCommissions } from "@/lib/commissionFile.action";
+import RecentCommissions from "./RecentCommission";
 
 export default async function CommissionPage() {
+  const recentCommissions = await getRecentCommissions();
   // Récupérer les prix disponibles pour les commissions
   const pricesData = await getCommissionPrices();
 
@@ -42,7 +14,8 @@ export default async function CommissionPage() {
       <Navbar />
       <main>
         <section className="section-commission-page">
-          <h1>Commissions : OPEN</h1>
+          <RecentCommissions recentCommissions={recentCommissions} />
+          <h1>Commissions</h1>
           <p>
             Thank you for your interest!
             <br />
