@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bougado Illustrator : Projet Galerie d'Illustrations et Commissions
 
-## Getting Started
+Ce projet est une application web permettant de gérer et vendre des illustrations ainsi que de traiter des commandes personnalisées.
 
-First, run the development server:
+## Installation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Suivez ces étapes pour installer et configurer le projet sur votre environnement local.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Prérequis
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Node.js (version 16 ou supérieure)
+- MySQL (ou autre base de données compatible avec Prisma)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Étapes d'installation
 
-## Learn More
+1. **Cloner le dépôt**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/BougadoGaboudo/application-illustration.git
+   cd application-illustration
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Installer les dépendances**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Configuration de l'environnement**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Créez un fichier `.env` à la racine du projet avec les variables suivantes :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```
+   DATABASE_URL="mysql://user:password@localhost:3306/nom_de_votre_base"
+   JWT_SECRET="votre_secret_jwt_tres_securise"
+   ```
+
+4. **Créer la base de données**
+
+   Avant de synchroniser le schéma Prisma, vous devez créer votre base de données :
+
+   ```bash
+   # Connectez-vous à MySQL
+   mysql -u votre_utilisateur -p
+
+   # Une fois connecté, créez la base de données
+   CREATE DATABASE nom_de_votre_base;
+
+   # Quittez MySQL
+   exit
+   ```
+
+5. **Initialiser la base de données**
+
+   ```bash
+   npx prisma db push
+   ```
+
+6. **Ajouter des données de test**
+
+   ```bash
+   node seed.js
+   ```
+
+7. **Démarrer l'application en mode développement**
+
+   ```bash
+   npm run dev
+   ```
+
+   L'application sera disponible à l'adresse [http://localhost:3000](http://localhost:3000).
+
+## Fonctionnalités principales
+
+- **Galerie d'illustrations** (/gallery): Visualisation et filtrage par type et tags
+- **Boutique** (/shop): Vente d'illustrations avec choix de formats et types d'impression
+- **Système de commissions** (/commission): Demandes de créations personnalisées
+- **Espace client** (/dashboard): Suivi des commandes et gestion du panier
+- **Espace administrateur** (/admin): Gestion des illustrations et commissions
+
+## Structure du projet
+
+- `/pages` : Pages de l'application (Next.js)
+- `/components` : Composants React réutilisables
+- `/public` : Fichiers statiques
+- `/prisma` : Modèle de données
+- `/lib` : Fonctions utilitaires et logique métier
+
+## Accès à l'application
+
+Après l'installation, un compte administrateur et un compte client seront créés automatiquement. Vous pouvez vous connecter à l'application en utilisant les informations suivantes :
+
+- **Email** : admin@admin.com
+- **Mot de passe** : 123
+
+- **Email** : client@client.com
+- **Mot de passe** : 123
+
+Vous pouvez également créer d'autres utilisateurs client via la page d'inscription (en cliquant sur l'icone du panier ou /register).
+
+---
+
+© 2025 - Bougado Illustrator
