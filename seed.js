@@ -20,6 +20,7 @@ async function main() {
       { format: "A3", type: "print", amount: 20.0 },
       { format: "A2", type: "print", amount: 25.0 },
       { format: "A4", type: "scroll", amount: 20.0 },
+      { format: "A5", type: "scroll", amount: 17.5 },
       { format: "A3", type: "scroll", amount: 25.0 },
       { format: "A2", type: "scroll", amount: 30.0 },
     ],

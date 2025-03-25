@@ -1,7 +1,7 @@
 module.exports = {
   testEnvironment: "node",
   transform: {
-    "^.+\\.jsx?$": "babel-jest",
+    "^.+\\.jsx?$": ["babel-jest", { configFile: "./.babelrc.test.js" }],
   },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
