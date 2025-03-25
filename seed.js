@@ -60,7 +60,7 @@ async function main() {
         type: "fanart",
       },
       {
-        title: "Study",
+        title: "Study Woman",
         url: "/img/studyfemme1.jpg",
         type: "study",
       },
@@ -70,7 +70,7 @@ async function main() {
         type: "fanart",
       },
       {
-        title: "Study Landscape",
+        title: "Study Urban Landscape",
         url: "/img/studypaysage4.jpg",
         type: "study",
       },
@@ -85,7 +85,7 @@ async function main() {
         type: "original",
       },
       {
-        title: "Study",
+        title: "Study Woman",
         url: "/img/studyfemme2.jpg",
         type: "study",
       },
@@ -116,12 +116,12 @@ async function main() {
         type: "original",
       },
       {
-        title: "Study Piaf",
+        title: "Study Bird",
         url: "/img/studypiaf.jpg",
         type: "study",
       },
       {
-        title: "Study",
+        title: "Study Man",
         url: "/img/studyhomme2.jpg",
         type: "study",
       },
@@ -147,8 +147,127 @@ async function main() {
     ],
     skipDuplicates: true,
   });
-}
 
+  // Création des tags
+  const tags = await prisma.$transaction(
+    [
+      "genshin impact",
+      "landscape",
+      "holiday",
+      "christmas",
+      "new year",
+      "dragon",
+      "animal",
+      "character",
+      "female",
+      "male",
+      "nature",
+      "colorful",
+      "anime",
+      "game",
+      "study",
+      "bunny",
+      "bird",
+      "shark",
+      "urban",
+    ].map((tagName) =>
+      prisma.tag.create({
+        data: { name: tagName },
+      })
+    )
+  );
+
+  // Association des tags avec les illustrations
+  // Création d'un Map pour faciliter l'accès aux tags
+  const tagMap = tags.reduce((map, tag) => {
+    map[tag.name] = tag.id;
+    return map;
+  }, {});
+
+  // Récupérer toutes les illustrations
+  const illustrations = await prisma.illustration.findMany();
+
+  // Associer les tags aux illustrations
+  const tagAssociations = [
+    {
+      title: "OC Dragon",
+      tags: ["dragon", "character", "original", "colorful"],
+    },
+
+    {
+      title: "Happy New Year 2025",
+      tags: ["holiday", "new year", "colorful", "character", "female"],
+    },
+    {
+      title: "Happy New Year 2024",
+      tags: ["holiday", "new year", "colorful", "character", "female"],
+    },
+    {
+      title: "Happy New Year 2022",
+      tags: ["holiday", "new year", "colorful", "character", "female"],
+    },
+
+    {
+      title: "Merry Christmas 2024",
+      tags: ["holiday", "christmas", "colorful"],
+    },
+    {
+      title: "Merry Christmas 2023",
+      tags: ["holiday", "christmas", "colorful"],
+    },
+    {
+      title: "Merry Christmas 2020",
+      tags: ["holiday", "christmas", "colorful"],
+    },
+
+    {
+      title: "Yelan from Genshin Impact",
+      tags: ["genshin impact", "game", "anime", "female", "character"],
+    },
+    {
+      title: "Ganyu from Genshin Impact",
+      tags: ["genshin impact", "game", "anime", "female", "character"],
+    },
+    {
+      title: "Kamisato Ayaka from Genshin Impact",
+      tags: ["genshin impact", "game", "anime", "female", "character"],
+    },
+    {
+      title: "Yae Miko from Genshin Impact",
+      tags: ["genshin impact", "game", "anime", "female", "character"],
+    },
+    {
+      title: "Raiden Shogun from Genshin Impact",
+      tags: ["genshin impact", "game", "anime", "female", "character"],
+    },
+
+    { title: "Study Woman", tags: ["study", "female", "character"] },
+    { title: "Study Man", tags: ["study", "male", "character"] },
+    { title: "Study Urban Landscape", tags: ["study", "landscape", "urban"] },
+    { title: "Study Bunny", tags: ["study", "animal", "bunny"] },
+    { title: "Study Shark", tags: ["study", "animal", "shark"] },
+    { title: "Study Bird", tags: ["study", "animal", "bird"] },
+  ];
+
+  // Création des associations
+  for (const association of tagAssociations) {
+    const illustration = illustrations.find(
+      (illus) => illus.title === association.title
+    );
+    if (illustration) {
+      for (const tagName of association.tags) {
+        if (tagMap[tagName]) {
+          await prisma.illustrationTag.create({
+            data: {
+              illustration: { connect: { id: illustration.id } },
+              tag: { connect: { id: tagMap[tagName] } },
+            },
+          });
+        }
+      }
+    }
+  }
+}
 main()
   .then(() => console.log("Seeding completed!"))
   .catch((e) => console.error(e))

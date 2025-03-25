@@ -43,13 +43,14 @@ model CartItem {
 }
 
 model Illustration {
-  id        Int              @id @default(autoincrement())
+  id        Int               @id @default(autoincrement())
   title     String
   url       String
   type      IllustrationType
   cartItems CartItem[]
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  tags      IllustrationTag[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 }
 
 model Price {
@@ -73,6 +74,7 @@ model Commission {
   files             CommissionFile[]
   user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   commissionPrice   CommissionPrice  @relation(fields: [commissionPriceId], references: [id], onDelete: Cascade)
+  tags              CommissionTag[]
   createdAt         DateTime         @default(now())
   updatedAt         DateTime         @updatedAt
 }
@@ -96,6 +98,37 @@ model CommissionPrice {
   baseAmount  Int
   bgAddon     Int // Prix pour le background
   commissions Commission[]
+}
+
+model Tag {
+  id               Int               @id @default(autoincrement())
+  name             String            @unique
+  illustrationTags IllustrationTag[]
+  commissionTags   CommissionTag[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model IllustrationTag {
+  id             Int          @id @default(autoincrement())
+  illustrationId Int
+  tagId          Int
+  illustration   Illustration @relation(fields: [illustrationId], references: [id], onDelete: Cascade)
+  tag            Tag          @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@unique([illustrationId, tagId])
+}
+
+model CommissionTag {
+  id           Int        @id @default(autoincrement())
+  commissionId Int
+  tagId        Int
+  commission   Commission @relation(fields: [commissionId], references: [id], onDelete: Cascade)
+  tag          Tag        @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+
+  @@unique([commissionId, tagId])
 }
 
 enum Role {
