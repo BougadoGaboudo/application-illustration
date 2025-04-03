@@ -1,10 +1,10 @@
-// src/app/admin/commissions/AdminCommissionList.jsx
 "use client";
 
 import { useState } from "react";
 import { deleteCommission } from "@/lib/commission.action";
 import Link from "next/link";
 import { translateStatus } from "@/lib/utils";
+import CommissionPrice from "@/components/CommissionPrice/CommissionPrice";
 
 export default function AdminCommission({ data }) {
   const [commissions, setCommissions] = useState(
@@ -73,11 +73,10 @@ export default function AdminCommission({ data }) {
                   <td>{commission.background ? "Oui" : "Non"}</td>
                   <td>{commission.user.email}</td>
                   <td>
-                    {commission.background
-                      ? commission.commissionPrice.baseAmount +
-                        commission.commissionPrice.bgAddon
-                      : commission.commissionPrice.baseAmount}
-                    €
+                    <CommissionPrice
+                      type={commission.type}
+                      background={commission.background}
+                    />
                   </td>
                   <td>
                     <Link href={`/admin/commission/${commission.id}`}>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { deleteCommission } from "@/lib/commission.action";
 import { translateStatus } from "@/lib/utils";
 import Link from "next/link";
+import CommissionPrice from "@/components/CommissionPrice/CommissionPrice";
 
 export default function UserCommissions({ data }) {
   const [userCommissions, setUserCommissions] = useState(
@@ -70,11 +71,10 @@ export default function UserCommissions({ data }) {
                 </p>
                 <p>
                   <span>Prix:</span>{" "}
-                  {commission.background
-                    ? commission.commissionPrice.baseAmount +
-                      commission.commissionPrice.bgAddon
-                    : commission.commissionPrice.baseAmount}
-                  €
+                  <CommissionPrice
+                    type={commission.type}
+                    background={commission.background}
+                  />
                 </p>
               </div>
               <div>

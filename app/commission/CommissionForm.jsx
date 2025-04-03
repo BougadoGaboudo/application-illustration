@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createCommission } from "@/lib/commission.action";
 import { useRouter } from "next/navigation";
+import CommissionPrice from "@/components/CommissionPrice/CommissionPrice";
 
 export default function CommissionForm({ prices }) {
   const router = useRouter();
@@ -10,15 +11,6 @@ export default function CommissionForm({ prices }) {
   const [hasBackground, setHasBackground] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Calculer le prix en fonction du type et du background
-  const getCurrentPrice = () => {
-    const price = prices.find((p) => p.type === selectedType);
-    if (!price) return 0;
-
-    // Calul prix total avec ou sans background
-    return hasBackground ? price.baseAmount + price.bgAddon : price.baseAmount;
-  };
 
   // Gérer la soumission du formulaire de création
   const handleSubmit = async (e) => {
@@ -120,7 +112,10 @@ export default function CommissionForm({ prices }) {
         </div>
 
         <div>
-          <p>Prix estimé: {getCurrentPrice()}€</p>
+          <p>
+            Prix :{" "}
+            <CommissionPrice type={selectedType} background={hasBackground} />
+          </p>
         </div>
 
         <button type="submit" disabled={loading}>

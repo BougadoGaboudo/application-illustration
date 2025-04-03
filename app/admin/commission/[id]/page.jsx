@@ -8,6 +8,7 @@ import CommissionStatusForm from "./CommissionStatusForm";
 import SketchUploadForm from "./SketchUploadForm";
 import FinalIllustrationUploadForm from "./FinalIllustrationUploadForm";
 import { translateStatus } from "@/lib/utils";
+import CommissionPrice from "@/components/CommissionPrice/CommissionPrice";
 
 export default async function CommissionDetailPage({ params }) {
   const { id } = await params;
@@ -76,11 +77,10 @@ export default async function CommissionDetailPage({ params }) {
                   )}
                 <p>
                   <span>Prix:</span>{" "}
-                  {commission.background
-                    ? commission.commissionPrice.baseAmount +
-                      commission.commissionPrice.bgAddon
-                    : commission.commissionPrice.baseAmount}
-                  €
+                  <CommissionPrice
+                    type={commission.type}
+                    background={commission.background}
+                  />
                 </p>
 
                 {/* Affichage des tags actuels */}

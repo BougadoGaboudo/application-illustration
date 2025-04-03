@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { updateCommission } from "@/lib/commission.action";
-import { getCommissionPrices } from "@/lib/commission.action";
+import { updateCommission, getCommissionPrices } from "@/lib/commission.action";
+import CommissionPrice from "@/components/CommissionPrice/CommissionPrice";
 
 export default function EditCommission({ commission }) {
   const router = useRouter();
@@ -38,18 +38,6 @@ export default function EditCommission({ commission }) {
       </div>
     );
   }
-
-  // Calculer le prix estimé avec la nouvelle structure
-  const getEstimatedPrice = () => {
-    if (prices.length === 0) return "Chargement...";
-
-    const priceInfo = prices.find((p) => p.type === type);
-    if (!priceInfo) return "Non disponible";
-
-    return background
-      ? priceInfo.baseAmount + priceInfo.bgAddon
-      : priceInfo.baseAmount;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -145,12 +133,12 @@ export default function EditCommission({ commission }) {
           </div>
         </div>
 
-        {prices.length > 0 && (
-          <div>
-            <h3>Prix estimé:</h3>
-            <p>{getEstimatedPrice()}€</p>
-          </div>
-        )}
+        <div>
+          <h3>Prix :</h3>
+          <p>
+            <CommissionPrice type={type} background={background} />
+          </p>
+        </div>
 
         <div>
           <button type="submit" disabled={loading}>
