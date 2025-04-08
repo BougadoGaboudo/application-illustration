@@ -68,7 +68,7 @@ export default function EditCommission({ commission }) {
       {error && <p>{error}</p>}
 
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="label-input">
           <label htmlFor="title">Titre:</label>
           <input
             type="text"
@@ -80,7 +80,7 @@ export default function EditCommission({ commission }) {
           />
         </div>
 
-        <div>
+        <div className="label-input">
           <label htmlFor="description">Description:</label>
           <textarea
             id="description"
@@ -92,7 +92,7 @@ export default function EditCommission({ commission }) {
           ></textarea>
         </div>
 
-        <div>
+        <div className="type">
           <label htmlFor="type">Type:</label>
           <select
             id="type"
@@ -107,7 +107,7 @@ export default function EditCommission({ commission }) {
           </select>
         </div>
 
-        <div>
+        <div className="label-input">
           <label>Fond inclus:</label>
           <div>
             <label>
@@ -140,13 +140,14 @@ export default function EditCommission({ commission }) {
           </p>
         </div>
 
-        <div>
+        <div className="button-container">
           <button type="submit" disabled={loading}>
             {loading ? "Modification en cours..." : "Modifier ma commission"}
           </button>
           <button
             type="button"
             onClick={() => router.push("/dashboard")}
+            className="secondary-button"
             disabled={loading}
           >
             Annuler

@@ -40,73 +40,74 @@ export default async function CommissionFilesPage({ params }) {
     <>
       <Navbar />
       <main>
-        <div>
-          <h1>Fichiers pour la commission "{commission.title}"</h1>
-          <p>Statut: {translateStatus(commission.status)}</p>
-          <Link href="/dashboard/commission">
-            <button>Retour au tableau de bord</button>
-          </Link>
-        </div>
+        <section className="section-files-commission">
+          <div>
+            <h1>Fichiers pour la commission "{commission.title}"</h1>
+            <p>Statut: {translateStatus(commission.status)}</p>
+            <Link href="/dashboard/commission">
+              <button>Retour au tableau de bord</button>
+            </Link>
+          </div>
 
-        <section>
-          <h2>Croquis</h2>
-          {sketches.length > 0 ? (
-            <div>
-              {sketches.map((sketch) => (
-                <div key={sketch.id}>
-                  <h3>{sketch.fileName}</h3>
-                  <p>
-                    Ajouté le: {new Date(sketch.createdAt).toLocaleDateString()}
-                  </p>
-                  <div>
-                    <img src={sketch.url} alt={sketch.fileName} />
-                    <a
-                      href={sketch.url}
-                      download={sketch.fileName}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <button>Télécharger le croquis</button>{" "}
-                      {/* Modifié le texte du bouton */}
-                    </a>
+          <div>
+            <h2>Croquis</h2>
+            {sketches.length > 0 ? (
+              <div>
+                {sketches.map((sketch) => (
+                  <div key={sketch.id}>
+                    <h3>{sketch.fileName}</h3>
+                    <p>
+                      Ajouté le:{" "}
+                      {new Date(sketch.createdAt).toLocaleDateString()}
+                    </p>
+                    <div>
+                      <img src={sketch.url} alt={sketch.fileName} />
+                      <a
+                        href={sketch.url}
+                        download={sketch.fileName}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button>Télécharger le croquis</button>{" "}
+                      </a>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>Aucun croquis disponible pour le moment.</p>
-          )}
-        </section>
+                ))}
+              </div>
+            ) : (
+              <p>Aucun croquis disponible pour le moment.</p>
+            )}
+          </div>
 
-        <section>
-          <h2>Illustrations finales</h2>
-          {finalIllustrations.length > 0 ? (
-            <div>
-              {finalIllustrations.map((illustration) => (
-                <div key={illustration.id}>
-                  <h3>{illustration.fileName}</h3>
-                  <p>
-                    Ajouté le:{" "}
-                    {new Date(illustration.createdAt).toLocaleDateString()}
-                  </p>
-                  <div>
-                    <img src={illustration.url} alt={illustration.fileName} />
-                    <a
-                      href={illustration.url}
-                      download={illustration.fileName}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <button>Télécharger l'illustration finale</button>{" "}
-                      {/* Modifié le texte du bouton */}
-                    </a>
+          <div>
+            <h2>Illustrations finales</h2>
+            {finalIllustrations.length > 0 ? (
+              <div>
+                {finalIllustrations.map((illustration) => (
+                  <div key={illustration.id}>
+                    <h3>{illustration.fileName}</h3>
+                    <p>
+                      Ajouté le:{" "}
+                      {new Date(illustration.createdAt).toLocaleDateString()}
+                    </p>
+                    <div>
+                      <img src={illustration.url} alt={illustration.fileName} />
+                      <a
+                        href={illustration.url}
+                        download={illustration.fileName}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button>Télécharger l'illustration finale</button>{" "}
+                      </a>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>Aucune illustration finale disponible pour le moment.</p>
-          )}
+                ))}
+              </div>
+            ) : (
+              <p>Aucune illustration finale disponible pour le moment.</p>
+            )}
+          </div>
         </section>
       </main>
     </>

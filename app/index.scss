@@ -12,3 +12,4 @@
 @use "/app/admin/illustration/AdminIllustration.scss";
 @use "/app/commission/CommissionPage.scss";
 @use "/app/dashboard/commission/DashboardCommission.scss";
+@use "./dashboard/commission/[id]/EditCommission.scss";

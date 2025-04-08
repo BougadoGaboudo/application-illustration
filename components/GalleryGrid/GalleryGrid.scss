@@ -4,41 +4,42 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 3rem auto;
   .tag-filters {
-    margin: 20px 0;
+    margin: 1rem 0;
   }
 
   .filter-buttons-container {
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
   }
 
   .tag-filters {
-    margin: 20px 0;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    padding: 15px;
+    margin: 1rem 0;
+    border: 0.1rem solid #eaeaea;
+    border-radius: 0.5rem;
+    padding: 1rem;
     background-color: #f9f9f9;
   }
 
   .select-container {
-    margin-top: 10px;
+    margin-top: 0.5rem;
   }
 
   .selected-tags-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0.5rem;
     font-size: 0.9rem;
     color: #666;
   }
 
   .clear-tags-btn {
-    padding: 5px 10px;
+    padding: 0.5rem 1rem;
     background-color: #ff4a4a;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     cursor: pointer;
     font-size: 0.85rem;
   }
@@ -50,24 +51,24 @@
   .tag-tooltip {
     position: fixed;
     background: rgba(0, 0, 0, 0.8);
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.4rem;
     z-index: 1000;
     pointer-events: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 0.4rem;
     max-width: 250px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   }
 
   .tag {
     font-size: 0.8rem;
-    padding: 2px 6px;
+    padding: 0.1rem 0.4rem;
     background: #4a9eff;
     color: white;
-    border-radius: 10px;
+    border-radius: 0.75rem;
     display: inline-block;
-    margin: 2px;
+    margin: 0.1rem;
   }
 }

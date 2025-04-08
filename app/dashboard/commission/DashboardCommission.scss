@@ -54,3 +54,16 @@
     width: fit-content;
   }
 }
+
+.section-files-commission {
+  margin: 3rem auto;
+  align-items: center;
+  gap: 2rem;
+  max-width: 50vw;
+  h1 {
+    text-align: center;
+  }
+  img {
+    width: 100%;
+  }
+}
